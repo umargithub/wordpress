@@ -34,6 +34,23 @@ function redirect_all_feeds_to_home() {
 add_action('template_redirect', 'redirect_all_feeds_to_home');
 ```
 
+> ✅ _For Multisite: Use the following variation to only apply on specific site IDs (e.g., 1, 2, 3):_
+
+```php
+function redirectFeeds() {
+    if (is_feed()) {
+        $currentSiteId = get_current_blog_id();
+        if (in_array($currentSiteId, [1, 2, 3])) {
+            wp_redirect(home_url(), 301);
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'redirectFeeds');
+```
+
+> 🔀 _Multisite tip:_ Use `get_current_blog_id()` to conditionally redirect feeds only for specific subsites.
+
 ---
 
 ## 🧠 **3. Redirect Individual Post Feeds to Their Post (Optional Behavior)**
